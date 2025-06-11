@@ -1,0 +1,16 @@
+services:
+  chat_server:
+    build: ./server
+    container_name: chat_server
+    ports:
+      - 55555:55555
+    networks:
+      - chatnet
+
+  chat_client:
+    build: ./client
+    networks:
+      - chatnet
+
+networks:
+  chatnet:
