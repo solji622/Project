@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .wrap {
+            text-align: center;
+        }
+
+        #nicknameInput {
+            text-align: center;
+            width: 100px;
+            height: 25px;
+            margin: 10px;
+            border: 1px solid gray;
+            border-radius: 10px;
+        }
+
+        #msgInput {
+            text-align: center;
+            width: 350px;
+            height: 50px;
+            overflow-y: scroll;
+            margin: 20px;
+            border: 1px solid gray;
+            border-radius: 10px;
+        }
+
+        #send {
+            width: 60px;
+            height: 50px;
+            background-color: rgb(227, 247, 253);
+            border: 1px solid rgb(178, 214, 226);
+            border-radius: 10px;
+            font-size: 11pt;
+        }
+
+        #send:hover {
+            background-color: rgb(219, 219, 219);
+            border: 1px solid lightgray;
+        }
+
+        #chatBox {
+            margin: 30px auto 0 auto;
+            overflow-y: scroll;
+            width: 500px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chatBox li {
+            border-radius: 10px;
+            margin: 5px 0;
+            padding: 5px 10px;
+            max-width: 50%;
+            word-break: break-word;
+            background-color: rgb(241, 252, 255);
+            border: 1px solid lightblue;
+        }
+
+        #chatBox li.my-msg {
+            color: gray;
+            border: 1px solid gray;
+            border-radius: 10px;
+            padding: 5px 10px;
+            margin: 5px 5px;
+            max-width: 70%;
+            word-break: break-word;
+            align-self: flex-end;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h2>💬🤫</h2>
+        <input id="nicknameInput" placeholder="닉네임" /> <br>
+    </div>
+    <ul id="chatBox"></ul>
+    <div class="wrap">
+        <input type="text" id="msgInput" placeholder="메시지를 입력하세요" />
+        <button id="send" onclick="sendMessage()">전송</button>
+    </div>
+   
+   <script>
+        const socket = new WebSocket("wss://" + location.hostname + "/ws");
+
+        socket.onmessage = function(event) {
+            const li = document.createElement("li");
+            li.innerText = event.data;
+
+            document.getElementById("chatBox").appendChild(li);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+
+        function sendMessage() {
+            const nickname = document.getElementById("nicknameInput").value.trim();
+            const msgInput = document.getElementById("msgInput");
+            const message = msgInput.value.trim();
+
+            if (!nickname || !message) return;
+            
+            const fullMessage = nickname + " : " + message;
+            socket.send(fullMessage);
+
+            const li = document.createElement("li");
+            li.innerText = fullMessage;
+            if(nickname == nickname) {
+                li.classList.add("my-msg");
+            }
+
+            document.getElementById("chatBox").appendChild(li);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            msgInput.value = "";
+        }
+
+        document.getElementById("msgInput").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                sendMessage();
+            }
+        });
+   </script>
+</body>
+</html>
