@@ -5,8 +5,8 @@ TCP 기반으로 만들었던 채팅 프로그램을 배포하고 싶어 방법�
 <br>
 
 ### 사용한 것들
-- python(라이브러리 : aiohttp) <br>
-- html(화면 구현) <br>
+- python(웹 소캣 서버 구현, 라이브러리 : aiohttp) <br>
+- html, css, javascript(화면 구현) <br>
 
 <br>
 <br>
