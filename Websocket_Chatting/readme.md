@@ -23,3 +23,10 @@ TCP 기반으로 만들었던 채팅 프로그램을 배포하고 싶어 방법�
 
 ### 최종 화면
 ![최종 화면](https://github.com/user-attachments/assets/47f50a1d-3ba0-4468-98db-dc946854330b)
+
+<br>
+<br>
+
+### 세부 내용
+노션에서 TCP로 구현한 버전과 함께 프로젝트 전체 내용 확인 가능합니다. <br>
+➡️ [노션 바로가기](https://solji0622.notion.site/Chatting-Program-209a922471628083b9d3efcacfd508cf?source=copy_link)
